@@ -48,6 +48,10 @@ public class Movie_MemberService {
 	public boolean modify(Movie_MemberDTO dto) {
 		return member_dao.modify(dto);
 	}
+	public String delete(String id) {
+		return member_dao.deleteMember(id);
+	}
+	
 	
 	////////// 공지 ///////////
 	

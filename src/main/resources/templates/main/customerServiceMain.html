@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>고객센터메인</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 <style>
+/*  header가 맨 위에 오도록 설정 */
+#header-container {
+    width: 100%;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 10;
+}
+
 #main{
 	width: 1100px;
 	height: 700px;
@@ -28,6 +37,11 @@
 </style>
 </head>
 <body>
+    <!--  header가 맨 위로 오도록 배치 -->
+    <div id="header-container">
+        <div th:replace="~{layouts/header}"></div>
+    </div>
+    
 <div class = "container">
 	<div id = "main">
 		<nav id = "nav">
@@ -49,5 +63,9 @@
 		</section>
 	</div>
 </div>
+
+    <div id="header-container">
+        <div th:replace="~{layouts/footer}"></div>
+    </div>
 </body>
 </html>

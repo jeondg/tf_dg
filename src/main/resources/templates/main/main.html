@@ -1,29 +1,181 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>메인</title>
+    <meta charset="UTF-8">
+    <title>POPBOX | 영화, 예매, 극장</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #fff;
+        }
+        .navbar {
+            background-color: #29220A;
+            border-bottom: 2px solid #BDBDBD;
+            padding: 10px 15px;
+        }
+        .container-fluid {
+            max-width: 900px; /* 전체 가로 폭 압축 */
+            margin: 0 auto;
+        }
+        .navbar-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between; /* 요소들 간격 균형 */
+            align-items: center;
+            gap: 10px; /* 요소들 간격 조정 */
+        }
+        .nav-item a {
+            color: #D8D8D8;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px 10px; /* 패딩 줄이기 */
+        }
+        .nav-item a:hover {
+            color: #ffcc00;
+        }
+        .menuimage {
+            height: 28px; /* 아이콘 크기 줄이기 */
+            width: 28px;
+        }
+        /* 고객센터 & 로그인 텍스트 스타일 */
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .nav-icon a {
+            font-size: 10px;
+            color: #BDBDBD;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .nav-icon a:hover {
+            color: #ffcc00;
+        }
+        /* POPBOX 로고 스타일 */
+        .logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #29220A;
+            padding: 3px;
+            width: fit-content;
+            border-radius: 3px;
+        }
+        .logo-text {
+            display: flex;
+        }
+        /* POPBOX 박스 크기 줄이기 */
+        .letter {
+            font-size: 14px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            width: 18px;
+            height: 22px;
+            display: flex;
+            background-color: #F2F2F2;
+            justify-content: center;
+            align-items: center;
+            margin: 1px;
+        }
+        .letter:nth-child(odd) {
+            color: #FFD700;
+        }
+        .letter:nth-child(even) {
+            color: #FFA500;
+        }
+        /* ENJOY THE MOVIE (배경색 분리) */
+        .enjoy-text {
+            font-size: 12px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            display: flex;
+            color: #ffffff;
+            justify-content: center;
+            line-height: 1;
+            margin-top: 3px;
+        }
+        /*.enjoy-text span:nth-child(odd) {
+            color: #FFD700;
+        }
+        .enjoy-text span:nth-child(even) {
+            color: #FFA500;
+        }*/
+    </style>
 </head>
 <body>
-<h2>깃헙 잘 쓰고있니?</h2>
-	<a href="/main">메인 게시판</a><br><br>
 
-	<th:block th:if="${session.memId == null}">
-		<a href ="/member/loginForm">로그인</a><br>
-		<a href ="/member/writeForm">회원가입</a><br>
-	</th:block>
-	
-	<th:block th:if="${session.memId != null}">
-		<a href="/member/logout">로그아웃</a><br>
-		<a href="/member/modifyForm">회원정보수정</a><br>		
-		<a href="/mypageMain">my page</a><br>
-		
-	</th:block>
-	
-	<th:block th:if="${session.memId == 'hong'}">
-      <a href="#">관리자 페이지로</a><br>
-   </th:block>
-   
-   <a href ="/customerServiceMain">고객 센터</a><br>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+                <!-- 왼쪽 메뉴 (고객센터 & 메뉴) -->
+                <li class="nav-item nav-icon">
+                    <a href="/customerServiceMain">고객센터</a>
+                    <a href="/#">
+                        <img class="menuimage" src="/menuimage/mainmenubar.jpg" alt="MENU">
+                    </a>                           
+                </li>
+
+                <li class="nav-item"><a href="#">영화</a></li>
+                <li class="nav-item"><a href="#">예매</a></li>
+
+                <!-- 중앙 POPBOX 로고 -->
+				<li class="nav-item logo-wrapper">
+				    <div class="logo-clickable" onclick="location.href='/main'"> <!-- ✅ 클릭하면 /main 이동 -->
+				        <div class="logo-container">
+				            <div class="logo-text">
+				                <div class="letter">P</div>
+				                <div class="letter">O</div>
+				                <div class="letter">P</div>
+				                <div class="letter">B</div>
+				                <div class="letter">O</div>
+				                <div class="letter">X</div>
+				            </div>
+				        </div>
+				        <div class="enjoy-text">
+				            <span>E</span><span>N</span><span>J</span><span>O</span><span>Y</span>
+				            <span> </span>
+				            <span>T</span><span>H</span><span>E</span>
+				            <span> </span>
+				            <span>M</span><span>O</span><span>V</span><span>I</span><span>E</span>
+				        </div>
+				    </div>
+				</li>
+
+
+                <li class="nav-item"><a href="#">스토어</a></li>
+                <li class="nav-item"><a href="#">VIP</a></li>
+
+                <!-- 오른쪽 메뉴 (로그인 & 마이페이지) -->
+                <li class="nav-item nav-icon">
+                    <th:block th:if="${session.memId == null}">
+                        <a href="/member/loginForm">로그인</a>
+                    </th:block>
+                    <th:block th:if="${session.memId != null}">
+                        <a href="/member/logout">로그아웃</a>
+                    </th:block>
+                    
+                    <a href="/mypageMain">
+                        <img class="menuimage" src="/menuimage/mainmypage.jpg" alt="MYPAGE">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="header-container">
+        <div th:replace="~{layouts/footer}"></div>
+    </div>
 </body>
 </html>

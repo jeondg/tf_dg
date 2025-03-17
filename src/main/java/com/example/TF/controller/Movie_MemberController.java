@@ -139,4 +139,28 @@ public class Movie_MemberController {
 		// 3. view 파일명 리턴
 		return "/member/modify"; // /member/modify.html
 	}
+	
+	@PostMapping("/member/delete")
+	public String delete(HttpSession session , Model model) {
+	    // 1. 세션에서 id 먼저 가져오기
+	    String id = (String) session.getAttribute("memId");
+	    
+	    if(id != null) {
+		    // 서비스 호출해서 탈퇴 처리
+		    String result = service.delete((String) session.getAttribute("memId"));
+	        if ("삭제성공".equals(result)) {
+	            session.invalidate(); // 세션 완전 초기화
+				// 아래것들 한번에
+				//session.removeAttribute("memId");
+				//session.removeAttribute("memName");
+			    model.addAttribute("result",result);
+	        }	
+
+			return "/member/delete";
+	    }
+	    // id가 없을 때 (예외 처리)
+	    model.addAttribute("result", "탈퇴 실패: 로그인 정보가 없습니다.");
+	    return "/member/delete";	    
+
+	}
 }

@@ -63,4 +63,16 @@ public class Movie_MemberDAO {
 		}
 		return result;
 	}
+	
+	// 탈퇴하기
+    public String deleteMember(String id) {
+    	String result = ""; 
+        if (movie_MemberRepository.existsById(id)) { 
+            movie_MemberRepository.deleteById(id);
+            result = "삭제성공";
+        } else {
+        	result = "삭제실패";
+        }
+        return result;
+    }
 }
