@@ -27,7 +27,7 @@ public class Movie_question_boardController {
 	Movie_MemberService service;
 	
 	// "D:/JDG/spring_boot/workspace/static/movie"
-	@Value("${project.upload.path}")
+	@Value("${project.upload.movie.path}")
 	private String uploadpath;
 	
 	// 1:1문의하기

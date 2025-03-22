@@ -1,5 +1,20 @@
 <!-- header.html -->
 <header class="header-container">
+	<script type="text/javascript" th:inline="javascript">
+	function checkLogin2(event) {
+	    event.preventDefault(); // 기본 링크 이동 방지
+	
+	    var isLoggedIn = /*[[${session.memId != null}]]*/ false; // Thymeleaf로 로그인 여부 체크
+	
+	    if (!isLoggedIn) {
+	        alert("로그인이 필요합니다.");
+	        window.location.href = "/member/loginForm"; // 로그인 페이지로 이동
+	    } else {
+	        window.location.href = "/mypageMain"; // 마이페이지 이동
+	    }
+	}
+	
+	</script>
     <style>
         .header-navbar {
             background-color: #ffffff;
@@ -107,7 +122,7 @@
             <ul class="header-nav">
                 <li class="header-item header-icon">
                     <a href="/customerServiceMain">고객센터</a>
-                    <a href="/main">
+                    <a href="#">
                         <img class="header-image" src="/menuimage/menubar.jpg" alt="MENU">
                     </a>                           
                 </li>
@@ -148,7 +163,7 @@
                         <a href="/member/logout">로그아웃</a>
                     </th:block>
                     
-                    <a href="/mypageMain">
+                    <a href="#" onclick="checkLogin2(event)">
                         <img class="header-image" src="/menuimage/mypage.jpg" alt="MYPAGE">
                     </a>
                 </li>
