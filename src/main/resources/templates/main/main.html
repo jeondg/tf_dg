@@ -11,7 +11,7 @@
         }
         .navbar {
             background-color: #29220A;
-            border-bottom: 2px solid #BDBDBD;
+            border-bottom: 1px solid #636363;
             padding: 10px 15px;
         }
         .container-fluid {
@@ -111,7 +111,75 @@
         .enjoy-text span:nth-child(even) {
             color: #FFA500;
         }*/
+        #main_boxoffice{
+        	background: linear-gradient(to bottom, black, #302710);
+        }
+        
+        
+        
+		/* 마우스 스크롤 애니메이션 컨테이너 */
+		.mouse-scroll {
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    margin-top: 50px; /* 원하는 위치 조정 */
+		}
+		
+		/* 마우스 모양 */
+		.mouse {
+		    width: 20px;
+		    height: 30px;
+		    border: 2px solid #C0C0C0; /* 회색 테두리 */
+		    border-radius: 25px;
+		    position: relative;
+		}
+		
+		/* 스크롤 애니메이션 (안쪽 점) */
+		.scroll {
+		    width: 3px;
+		    height: 5px;
+		    background-color: #C0C0C0; /* 점 색상 */
+		    border-radius: 50%;
+		    position: absolute; /* 부모 컨테이너를 기준으로 위치시킴 */
+		    top: 3px;	/* top: 3px;을 제거하면, 애니메이션이 비활성화되었을 때 요소가 어디에 있어야 하는지 명확하지 않을 수 있음. */
+		    left: 50%; /* 부모 요소의 가로 가운데로 이동 */
+		    transform: translateX(-50%); /* left 값만 지정하면 요소의 왼쪽 끝이 50% 위치로 이동하므로 얘를 써서 가로 중앙 정렬을 정확히 맞춤 */
+		    animation: scroll-animation 1.5s infinite ease-in-out; /* 에니메이션 1.5초 무한반복 천천히-중간빨라졌다-천천히*/
+		}
+		
+		/* 점이 위아래로 움직이는 애니메이션 */
+		@keyframes scroll-animation {
+		    0% {
+		        top: 3px; /* 시작시 3px */
+		        opacity: 1; /* 투명도 1=불투명 0=반투명 */
+		    }
+		    50% {
+		        top: 10px; /* 중간에 7px 내려감 */
+		        opacity: 0.5;
+		    }
+		    100% {
+		        top: 3px;
+		        opacity: 1;
+		    }
+		}
     </style>
+<script type="text/javascript" th:inline="javascript">
+console.log("session.memId:", /*[[${session.memId}]]*/ "NULL");
+function checkLogin(event) {
+    event.preventDefault(); // 기본 링크 이동 방지
+
+    var isLoggedIn = /*[[${session.memId != null}]]*/ false; // Thymeleaf로 로그인 여부 체크
+
+    if (!isLoggedIn) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "/member/loginForm"; // 로그인 페이지로 이동
+    } else {
+        window.location.href = "/mypageMain"; // 마이페이지 이동
+    }
+}
+
+</script>
+
 </head>
 <body>
 
@@ -122,7 +190,7 @@
                 <!-- 왼쪽 메뉴 (고객센터 & 메뉴) -->
                 <li class="nav-item nav-icon">
                     <a href="/customerServiceMain">고객센터</a>
-                    <a href="/#">
+                    <a href="#">
                         <img class="menuimage" src="/menuimage/mainmenubar.jpg" alt="MENU">
                     </a>                           
                 </li>
@@ -132,7 +200,7 @@
 
                 <!-- 중앙 POPBOX 로고 -->
 				<li class="nav-item logo-wrapper">
-				    <div class="logo-clickable" onclick="location.href='/main'"> <!-- ✅ 클릭하면 /main 이동 -->
+				    <div class="logo-clickable" onclick="location.href='/main'"> <!--  클릭하면 /main 이동 -->
 				        <div class="logo-container">
 				            <div class="logo-text">
 				                <div class="letter">P</div>
@@ -166,14 +234,141 @@
                         <a href="/member/logout">로그아웃</a>
                     </th:block>
                     
-                    <a href="/mypageMain">
+                    <a href="#" onclick="checkLogin(event)">
                         <img class="menuimage" src="/menuimage/mainmypage.jpg" alt="MYPAGE">
                     </a>
                 </li>
             </ul>
         </div>
     </nav>
+    
+    
+    <div id="main_boxoffice">
+		<table style="margin-top: 60px; margin-left:auto; margin-right:auto;">
+			<tr>
+				<td colspan="4" align="center" style="width:900px;"><span style="color: #F2F2F2;">박스오피스</span>
+					<span style="position: absolute; right: 300px; color: #ADADAD; font-size: 10px;">더 보기 +</span>
+				</td>
+			</tr>
+		    <tr>
+		        <!-- 각 영화 정보를 열로 정렬 -->
+		        <td th:each="dto1 : ${list_boxoffice}" align="center">
+		            <!-- 영화 포스터 -->
+		            <a th:href="|/movieinfo/moviedetail?moviecode=${dto1.moviecode}|">
+		                <img style="padding:10px;"width="230" height="320" th:src="|/movie_poster/${dto1.poster1}|" alt="영화 포스터">
+		            </a>
+		
+		            <!-- 좋아요 및 예매 버튼 -->
+		            <div style="margin-top: 10px; text-align: center;">
+		                <span>❤️ <span th:text="숫자" style="color:white;"></span></span> <!-- 좋아요 개수 -->
+		                <button style="background-color: #007bff; color: white; border: none; padding: 5px 10px; margin-left: 10px; cursor: pointer;">
+		                    예매
+		                </button>
+		            </div>
+		        </td>
+		    </tr>
+		    
 
+		</table>
+		<table style="margin-top:30px; margin-bottom:50px; width:900px; margin-left:auto; margin-right:auto;">
+		    <tr style="text-align:center; color:#F2F2F2;">
+		    	<td style="width:225px; background-color:#241D0B; padding-top:20px; padding-bottom:20px;">검색은 희망사항<div class="separator"></div></td>
+		    	<td style="width:225px; background-color:#241D0B; padding-top:20px; padding-bottom:20px;">상영시간표<div class="separator"></div></td>
+		    	<td style="width:225px; background-color:#241D0B; padding-top:20px; padding-bottom:20px;">박스오피스<div class="separator"></div></td>
+		    	<td style="width:225px; background-color:#241D0B; padding-top:20px; padding-bottom:20px;">예매</td>
+		    </tr>
+		</table>
+		<!-- 마우스 스크롤 애니메이션 -->
+		<div class="mouse-scroll" style="margin-bottom:20px;">
+		    <div class="mouse">
+		        <div class="scroll"></div>
+		    </div>
+		</div>
+    </div>
+    
+    
+    <div id="main-total">
+		<table style="margin-top: 50px; margin-left:auto; margin-right:auto; margin-bottom:30px;">
+			<tr>
+				<td colspan="4" align="left" style="width:900px;"><span style="color: #29220A;">누적관객수 순</span>
+					<span style="position: absolute; right: 300px; color: #695719; font-size: 10px;">더 보기 +</span>
+				</td>
+			</tr>
+		    <tr>
+		        <!-- 각 영화 정보를 열로 정렬 -->
+		        <td th:each="dto2 : ${list_total}" align="center">
+		            <!-- 영화 포스터 -->
+		            <a th:href="|/movieinfo/moviedetail?moviecode=${dto2.moviecode}|">
+		                <img style="padding:10px;"width="230" height="320" th:src="|/movie_poster/${dto2.poster1}|" alt="영화 포스터">
+		            </a>
+		
+		            <!-- 좋아요 및 예매 버튼 -->
+		            <div style="margin-top: 10px; text-align: center;">
+		                <span>❤️ <span th:text="숫자" style="color:#695719;"></span></span> <!-- 좋아요 개수 -->
+		                <button style="background-color: #007bff; color: white; border: none; padding: 5px 10px; margin-left: 10px; cursor: pointer;">
+		                    예매
+		                </button>
+		            </div>
+		        </td>
+		    </tr>
+		</table>
+    </div>
+    
+    
+    <div id="main-korea" style="background-color:#D4D18B;">
+		<table style="margin-top: 50px; margin-left:auto; margin-right:auto; margin-bottom:30px;">
+			<tr>
+				<td colspan="4" align="left" style="width:900px;"><span style="color: #29220A;">국내영화 박스오피스</span>
+					<span style="position: absolute; right: 300px; color: #695719; font-size: 10px;">더 보기 +</span>
+				</td>
+			</tr>
+		    <tr>
+		        <!-- 각 영화 정보를 열로 정렬 -->
+		        <td th:each="dto3 : ${list_korea}" align="center">
+		            <!-- 영화 포스터 -->
+		            <a th:href="|/movieinfo/moviedetail?moviecode=${dto3.moviecode}|">
+		                <img style="padding:10px;"width="230" height="320" th:src="|/movie_poster/${dto3.poster1}|" alt="영화 포스터">
+		            </a>
+		
+		            <!-- 좋아요 및 예매 버튼 -->
+		            <div style="margin-top: 10px; text-align: center;">
+		                <span>❤️ <span th:text="숫자" style="color:#302710;"></span></span> <!-- 좋아요 개수 -->
+		                <button style="background-color: #007bff; color: white; border: none; padding: 5px 10px; margin-left: 10px; cursor: pointer;">
+		                    예매
+		                </button>
+		            </div>
+		        </td>
+		    </tr>
+		</table>
+    </div>
+    
+    <div id="main-foreign" style="background-color:#FFFCCC">
+		<table style="margin-top: 50px; margin-left:auto; margin-right:auto; margin-bottom:30px;">
+			<tr>
+				<td colspan="4" align="left" style="width:900px;"><span style="color: #29220A;">해외영화 박스오피스</span>
+					<span style="position: absolute; right: 300px; color: #695719; font-size: 10px;">더 보기 +</span>
+				</td>
+			</tr>
+		    <tr>
+		        <!-- 각 영화 정보를 열로 정렬 -->
+		        <td th:each="dto4 : ${list_foreign}" align="center">
+		            <!-- 영화 포스터 -->
+		            <a th:href="|/movieinfo/moviedetail?moviecode=${dto4.moviecode}|">
+		                <img style="padding:10px;"width="230" height="320" th:src="|/movie_poster/${dto4.poster1}|" alt="영화 포스터">
+		            </a>
+		
+		            <!-- 좋아요 및 예매 버튼 -->
+		            <div style="margin-top: 10px; text-align: center;">
+		                <span>❤️ <span th:text="숫자" style="color:#302710;"></span></span> <!-- 좋아요 개수 -->
+		                <button style="background-color: #007bff; color: white; border: none; padding: 5px 10px; margin-left: 10px; cursor: pointer;">
+		                    예매
+		                </button>
+		            </div>
+		        </td>
+		    </tr>
+		</table>
+    </div>    
+    
     <div id="header-container">
         <div th:replace="~{layouts/footer}"></div>
     </div>

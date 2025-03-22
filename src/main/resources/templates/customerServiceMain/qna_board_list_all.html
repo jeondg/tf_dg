@@ -12,7 +12,7 @@
 	text-decoration: none;
 }
 .subjectA:hover {
-	color: #01bde7; text-decoration: underline;
+	color: #01bde7; text-decoration: none;
 }
 </style>
 
@@ -23,20 +23,13 @@
 
 <div class="container">
 
-<table border="1" class="table" style="width: 760px;">
-	<tr>
-		<td colspan="4">
-			<a href="/customerServiceMain/qna_board_list_all"><input type="button" value="전체"></a>
-			<a href="/customerServiceMain/qna_board_list_reserve"><input type="button" value="예매/관람권"></a>
-			<a href="/customerServiceMain/qna_board_list_theater"><input type="button" value="영화관이용"></a>
-			<a href="/customerServiceMain/qna_board_list_homepage"><input type="button" value="홈페이지"></a>
-		</td>
-	</tr>
-	<tr align="center" class="table-danger">
-		<td>번호</td>
-		<td>구분</td>
+<table border="1" class="table" style="width: 700px;">
+
+	<tr align="center" class="table-secondary">
+		<td style="width: 100px;">번호</td>
+		<td style="width: 120px;">구분</td>
 		<td>제목</td>
-		<td>작성일</td>
+		<td style="width: 150px;">작성일</td>
 	</tr>
 	
 	<tr th:each="dto : ${list}" align="center">
@@ -69,6 +62,15 @@
 				<a th:href="@{/customerServiceMain/qna_board_list_all(pg=${endPage+1})}"
 				 class="paging">[다음]</a>
 			</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<a href="/customerServiceMain/qna_board_list_all"><input type="button" value="전체"></a>
+			<a href="/customerServiceMain/qna_board_list_reserve"><input type="button" value="예매/관람권"></a>
+			<a href="/customerServiceMain/qna_board_list_theater"><input type="button" value="영화관이용"></a>
+			<a href="/customerServiceMain/qna_board_list_homepage"><input type="button" value="홈페이지"></a>
 		</td>
 	</tr>
 

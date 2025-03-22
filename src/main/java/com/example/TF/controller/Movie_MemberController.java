@@ -1,6 +1,7 @@
 package com.example.TF.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.TF.dto.Movie_MemberDTO;
+import com.example.TF.dto.Movie_infoDTO;
 import com.example.TF.entity.Movie_Member;
+import com.example.TF.entity.Movie_info;
+import com.example.TF.entity.Movie_notice_board;
+import com.example.TF.entity.Movie_user_qna_board;
 import com.example.TF.service.Movie_MemberService;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,10 +27,18 @@ public class Movie_MemberController {
 	
 	@GetMapping("/customerServiceMain")
 	public String customerServiceMain(Model model, HttpSession session) {
-		
+        
+		if (session.getAttribute("memId") != null) {
+            model.addAttribute("memId", session.getAttribute("memId"));
+        }		
+		int pg = 1;
+		List<Movie_notice_board> list1 = service.notice_board_list(1, 5);
+		List<Movie_user_qna_board> list2 = service.qna_list(1, 5);
 		// 2. 데이터 공유
+		model.addAttribute("pg", pg);
 		model.addAttribute("req2", "none");
-		
+		model.addAttribute("list1", list1);
+		model.addAttribute("list2", list2);
 		// 3. view 파일명 리턴
 		return "/main/customerServiceMain";
 		
@@ -44,7 +57,19 @@ public class Movie_MemberController {
 	}
 	// http://localhost:8080/main
 	@GetMapping("/main")	// 메인가기
-	public String main() {
+	public String main(HttpSession session, Model model, Movie_infoDTO dto) {
+        if (session.getAttribute("memId") != null) {
+            model.addAttribute("memId", session.getAttribute("memId"));
+        }
+        List<Movie_info> list_boxoffice = service.info_list_boxoffice(1, 4);
+        List<Movie_info> list_total = service.info_list_total(1, 4);
+        List<Movie_info> list_korea = service.info_list_country(1, 4);
+        List<Movie_info> list_foreign = service.info_list_foreign(1, 4);
+        model.addAttribute("list_boxoffice", list_boxoffice);
+        model.addAttribute("list_total", list_total);
+        model.addAttribute("list_korea", list_korea);
+        model.addAttribute("list_foreign", list_foreign);
+        
 		return "/main/main";
 	}
 	

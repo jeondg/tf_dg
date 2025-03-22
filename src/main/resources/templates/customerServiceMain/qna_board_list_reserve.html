@@ -14,6 +14,9 @@
 .subjectA:hover {
 	color: #01bde7; text-decoration: underline;
 }
+#tabletop{
+	color: #3B3B3B;
+}
 </style>
 
 
@@ -23,17 +26,10 @@
 
 <div class="container">
 
-<table border="1" class="table" style="width: 760px;">
-	<tr>
-		<td colspan="4">
-			<a href="/customerServiceMain/qna_board_list_all"><input type="button" value="전체"></a>
-			<a href="/customerServiceMain/qna_board_list_reserve"><input type="button" value="예매/관람권"></a>
-			<a href="/customerServiceMain/qna_board_list_theater"><input type="button" value="영화관이용"></a>
-			<a href="/customerServiceMain/qna_board_list_homepage"><input type="button" value="홈페이지"></a>
-		</td>
-	</tr>
+<table border="1" class="table" style="width: 700px;">
 
-	<tr align="center" class="table-danger">
+
+	<tr align="center" class="table-secondary" id="tabletop">
 		<td>번호</td>
 		<td>구분</td>
 		<td>제목</td>
@@ -73,6 +69,15 @@
 		</td>
 	</tr>
 
+
+	<tr>
+		<td colspan="4">
+			<a href="/customerServiceMain/qna_board_list_all"><input type="button" value="전체"></a>
+			<a href="/customerServiceMain/qna_board_list_reserve"><input type="button" value="예매/관람권"></a>
+			<a href="/customerServiceMain/qna_board_list_theater"><input type="button" value="영화관이용"></a>
+			<a href="/customerServiceMain/qna_board_list_homepage"><input type="button" value="홈페이지"></a>
+		</td>
+	</tr>
 </table>
 
 </div>
